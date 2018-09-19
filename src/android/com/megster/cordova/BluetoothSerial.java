@@ -23,7 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Set;
+import java.util.*;
 
 /**
  * PhoneGap Plugin for Serial Communication over Bluetooth
@@ -53,6 +53,7 @@ public class BluetoothSerial extends CordovaPlugin {
     private static final String CLEAR_DEVICE_DISCOVERED_LISTENER = "clearDeviceDiscoveredListener";
     private static final String SET_NAME = "setName";
     private static final String SET_DISCOVERABLE = "setDiscoverable";
+    private static final String START_LOOP = "setDiscoverable";
 
     // callbacks
     private CallbackContext connectCallback;
@@ -108,6 +109,11 @@ public class BluetoothSerial extends CordovaPlugin {
 
             listBondedDevices(callbackContext);
 
+        } else if (action.equals(START_LOOP)) {
+          String[] pids = { "OC", "OD", "04", "21", "44", "11", "0B", "0A", "22", "10", "46", "0F", "05", "5C", "1F" };
+          for (int i = 0; i < pids.lenght; i++) {
+            bluetoothSerialService.write("01 " + pids[i]);
+          }
         } else if (action.equals(CONNECT)) {
 
             boolean secure = true;
